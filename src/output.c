@@ -543,7 +543,7 @@ void print_values(unsigned int y,unsigned int x,const char *if_name,t_iface_spee
         case CSV_OUT:
             gettimeofday(&tv, NULL);
 				tmp_out_file=out_file==NULL ? stdout : out_file;
-            fprintf(tmp_out_file,"%f%c%s%c",tv.tv_sec+tv.tv_usec,csv_char,if_name,csv_char);
+            fprintf(tmp_out_file,"%d%06d%c%s%c",(int)tv.tv_sec,(int)tv.tv_usec,csv_char,if_name,csv_char);
 				if (output_type == RATE_OUT || output_type == SUM_OUT) {
 					if (output_type == RATE_OUT) {
 						stats_csv = &stats;
