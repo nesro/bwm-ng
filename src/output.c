@@ -21,6 +21,7 @@
  *                                                                            *
  *****************************************************************************/
 
+#include <time.h>
 #include "global_vars.h"
 #include "output.h"
 
@@ -418,6 +419,7 @@ char *values2str(char mode,t_iface_speed_stats stats,t_iface_stats full_stats,fl
 /* do the actual output */
 void print_values(unsigned int y,unsigned int x,const char *if_name,t_iface_speed_stats stats,float multiplier,t_iface_stats full_stats) {
    char buffer[50];
+   struct timeval tv;
 #if CSV || HTML
 	FILE *tmp_out_file;
 #endif
@@ -539,8 +541,9 @@ void print_values(unsigned int y,unsigned int x,const char *if_name,t_iface_spee
 #endif
 #ifdef CSV
         case CSV_OUT:
+            gettimeofday(&tv, NULL);
 				tmp_out_file=out_file==NULL ? stdout : out_file;
-            fprintf(tmp_out_file,"%i%c%s%c",(int)time(NULL),csv_char,if_name,csv_char);
+            fprintf(tmp_out_file,"%f%c%s%c",tv.tv_sec+tv.tv_usec,csv_char,if_name,csv_char);
 				if (output_type == RATE_OUT || output_type == SUM_OUT) {
 					if (output_type == RATE_OUT) {
 						stats_csv = &stats;
